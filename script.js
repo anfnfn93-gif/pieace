@@ -1,7 +1,72 @@
 /* =========================================
    MY LIFE - SCRIPT
+   Supabase 댓글 저장 버전
 ========================================= */
 
+
+/* =========================================
+   SUPABASE 설정
+========================================= */
+
+const SUPABASE_URL =
+    "https://dlibzkietlmhpkujuvdx.supabase.co";
+
+const SUPABASE_KEY =
+    "sb_publishable_WutwpszEMXIXFG_GMY5IbA_J5TSFxsd";
+
+
+/* =========================================
+   SUPABASE 요청 함수
+========================================= */
+
+async function supabaseRequest(endpoint, options = {}) {
+
+    const response = await fetch(
+        `${SUPABASE_URL}/rest/v1/${endpoint}`,
+        {
+            ...options,
+
+            headers: {
+                "apikey": SUPABASE_KEY,
+                "Authorization": `Bearer ${SUPABASE_KEY}`,
+                "Content-Type": "application/json",
+                "Prefer": options.method === "POST"
+                    ? "return=representation"
+                    : "return=minimal",
+
+                ...(options.headers || {})
+            }
+        }
+    );
+
+    if (!response.ok) {
+
+        const errorText =
+            await response.text();
+
+        console.error(
+            "Supabase 오류:",
+            response.status,
+            errorText
+        );
+
+        throw new Error(
+            `Supabase 오류 ${response.status}: ${errorText}`
+        );
+    }
+
+    const text =
+        await response.text();
+
+    return text
+        ? JSON.parse(text)
+        : null;
+}
+
+
+/* =========================================
+   페이지 로딩
+========================================= */
 
 document.addEventListener("DOMContentLoaded", () => {
 
@@ -21,7 +86,9 @@ document.addEventListener("DOMContentLoaded", () => {
             headerLike.classList.toggle("liked");
 
 
-            if (headerLike.classList.contains("liked")) {
+            if (
+                headerLike.classList.contains("liked")
+            ) {
 
                 headerLike.textContent = "♥";
 
@@ -34,7 +101,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     }
-
 
 
     /* =====================================
@@ -51,7 +117,9 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
             const isFollowing =
-                followButton.classList.contains("following");
+                followButton.classList.contains(
+                    "following"
+                );
 
 
             if (isFollowing) {
@@ -79,7 +147,6 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-
     /* =====================================
        MENU
     ====================================== */
@@ -100,7 +167,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     }
-
 
 
     /* =====================================
@@ -139,7 +205,8 @@ document.addEventListener("DOMContentLoaded", () => {
 
                 if (filter === "all") {
 
-                    card.style.display = "block";
+                    card.style.display =
+                        "block";
 
                 } else {
 
@@ -147,11 +214,13 @@ document.addEventListener("DOMContentLoaded", () => {
                         card.classList.contains(filter)
                     ) {
 
-                        card.style.display = "block";
+                        card.style.display =
+                            "block";
 
                     } else {
 
-                        card.style.display = "none";
+                        card.style.display =
+                            "none";
 
                     }
 
@@ -162,7 +231,6 @@ document.addEventListener("DOMContentLoaded", () => {
         });
 
     });
-
 
 
     /* =====================================
@@ -209,13 +277,32 @@ document.addEventListener("DOMContentLoaded", () => {
         null;
 
 
-
     /* =====================================
-       COMMENTS DATA
+       COMMENT ELEMENTS
     ====================================== */
 
-    const comments = {};
+    const commentInput =
+        document.getElementById(
+            "commentInput"
+        );
 
+
+    const commentBtn =
+        document.getElementById(
+            "commentBtn"
+        );
+
+
+    const commentList =
+        document.getElementById(
+            "commentList"
+        );
+
+
+    const commentCount =
+        document.getElementById(
+            "commentCount"
+        );
 
 
     /* =====================================
@@ -224,10 +311,11 @@ document.addEventListener("DOMContentLoaded", () => {
 
     postCards.forEach(card => {
 
-        card.addEventListener("click", () => {
+        card.addEventListener("click", async () => {
 
 
-            currentPost = card;
+            currentPost =
+                card;
 
 
             const title =
@@ -305,19 +393,17 @@ document.addEventListener("DOMContentLoaded", () => {
                COMMENTS
             ================================== */
 
-            renderComments();
-
-
             modal.classList.add("show");
-
 
             document.body.style.overflow =
                 "hidden";
 
+
+            await loadComments();
+
         });
 
     });
-
 
 
     /* =====================================
@@ -371,7 +457,6 @@ document.addEventListener("DOMContentLoaded", () => {
     );
 
 
-
     /* =====================================
        MODAL LIKE
     ====================================== */
@@ -407,42 +492,11 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-
     /* =====================================
-       COMMENT ELEMENTS
+       LOAD COMMENTS FROM SUPABASE
     ====================================== */
 
-    const commentInput =
-        document.getElementById(
-            "commentInput"
-        );
-
-
-    const commentBtn =
-        document.getElementById(
-            "commentBtn"
-        );
-
-
-    const commentList =
-        document.getElementById(
-            "commentList"
-        );
-
-
-    const commentCount =
-        document.getElementById(
-            "commentCount"
-        );
-
-
-
-    /* =====================================
-       RENDER COMMENTS
-    ====================================== */
-
-    function renderComments() {
-
+    async function loadComments() {
 
         if (!currentPost) {
             return;
@@ -450,14 +504,77 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const postId =
-            currentPost.dataset.title;
+            currentPost.dataset.title || "";
 
 
-        const postComments =
-            comments[postId] || [];
+        try {
+
+            const encodedPostId =
+                encodeURIComponent(postId);
 
 
-        commentList.innerHTML = "";
+            const data =
+                await supabaseRequest(
+                    `comments?post_id=eq.${encodedPostId}` +
+                    `&select=id,post_id,name,text,created_at` +
+                    `&order=created_at.asc`
+                );
+
+
+            renderComments(data || []);
+
+        } catch (error) {
+
+            console.error(
+                "댓글 불러오기 실패:",
+                error
+            );
+
+
+            commentList.innerHTML = "";
+
+
+            const errorMessage =
+                document.createElement("div");
+
+
+            errorMessage.className =
+                "comment-empty";
+
+
+            errorMessage.innerHTML =
+                "댓글을 불러오지 못했습니다.<br>" +
+                "잠시 후 다시 시도해주세요.";
+
+
+            commentList.appendChild(
+                errorMessage
+            );
+
+
+            commentCount.textContent =
+                "0";
+
+        }
+
+    }
+
+
+    /* =====================================
+       RENDER COMMENTS
+    ====================================== */
+
+    function renderComments(
+        postComments
+    ) {
+
+        if (!commentList) {
+            return;
+        }
+
+
+        commentList.innerHTML =
+            "";
 
 
         commentCount.textContent =
@@ -491,7 +608,6 @@ document.addEventListener("DOMContentLoaded", () => {
         }
 
 
-
         postComments.forEach(comment => {
 
 
@@ -503,36 +619,55 @@ document.addEventListener("DOMContentLoaded", () => {
                 "comment-item";
 
 
+            const name =
+                escapeHtml(
+                    comment.name || ""
+                );
+
+
+            const text =
+                escapeHtml(
+                    comment.text || ""
+                );
+
+
+            const date =
+                formatCommentDate(
+                    comment.created_at
+                );
+
+
             item.innerHTML = `
 
                 <div class="comment-name">
-                    ${escapeHtml(comment.name)}
+                    ${name}
                 </div>
 
                 <div class="comment-text">
-                    ${escapeHtml(comment.text)}
+                    ${text}
                 </div>
 
                 <span class="comment-date">
-                    ${escapeHtml(comment.date)}
+                    ${escapeHtml(date)}
                 </span>
 
             `;
 
 
-            commentList.appendChild(item);
+            commentList.appendChild(
+                item
+            );
 
         });
 
     }
 
 
-
     /* =====================================
        ADD COMMENT
     ====================================== */
 
-    function addComment() {
+    async function addComment() {
 
 
         if (!currentPost) {
@@ -554,35 +689,77 @@ document.addEventListener("DOMContentLoaded", () => {
 
 
         const postId =
-            currentPost.dataset.title;
+            currentPost.dataset.title || "";
 
 
-        if (!comments[postId]) {
+        /* 버튼 중복 클릭 방지 */
 
-            comments[postId] = [];
+        if (commentBtn) {
+
+            commentBtn.disabled =
+                true;
 
         }
 
 
-        comments[postId].push({
+        try {
 
-            name: "조성현",
+            await supabaseRequest(
+                "comments",
+                {
+                    method: "POST",
 
-            text: text,
+                    body: JSON.stringify({
+                        post_id: postId,
+                        name: "조성현",
+                        text: text
+                    })
+                }
+            );
 
-            date: getCurrentDate()
 
-        });
+            /* 입력창 비우기 */
+
+            commentInput.value =
+                "";
 
 
-        commentInput.value = "";
+            /* 저장된 댓글 다시 불러오기 */
+
+            await loadComments();
 
 
-        renderComments();
+        } catch (error) {
+
+            console.error(
+                "댓글 저장 실패:",
+                error
+            );
+
+
+            alert(
+                "댓글 저장에 실패했습니다.\n" +
+                "잠시 후 다시 시도해주세요."
+            );
+
+
+        } finally {
+
+            if (commentBtn) {
+
+                commentBtn.disabled =
+                    false;
+
+            }
+
+        }
 
     }
 
 
+    /* =====================================
+       COMMENT BUTTON
+    ====================================== */
 
     if (commentBtn) {
 
@@ -594,6 +771,10 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
+    /* =====================================
+       COMMENT ENTER
+    ====================================== */
+
     if (commentInput) {
 
         commentInput.addEventListener(
@@ -603,6 +784,8 @@ document.addEventListener("DOMContentLoaded", () => {
                 if (
                     event.key === "Enter"
                 ) {
+
+                    event.preventDefault();
 
                     addComment();
 
@@ -614,37 +797,53 @@ document.addEventListener("DOMContentLoaded", () => {
     }
 
 
-
     /* =====================================
-       DATE
+       COMMENT DATE
     ====================================== */
 
-    function getCurrentDate() {
+    function formatCommentDate(
+        dateString
+    ) {
 
-        const now =
-            new Date();
+        if (!dateString) {
+            return "";
+        }
+
+
+        const date =
+            new Date(dateString);
+
+
+        if (
+            Number.isNaN(
+                date.getTime()
+            )
+        ) {
+
+            return "";
+
+        }
 
 
         const year =
-            now.getFullYear();
+            date.getFullYear();
 
 
         const month =
             String(
-                now.getMonth() + 1
+                date.getMonth() + 1
             ).padStart(2, "0");
 
 
         const day =
             String(
-                now.getDate()
+                date.getDate()
             ).padStart(2, "0");
 
 
         return `${year}.${month}.${day}`;
 
     }
-
 
 
     /* =====================================

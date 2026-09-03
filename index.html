@@ -1,0 +1,766 @@
+<!DOCTYPE html>
+<html lang="ko">
+
+<head>
+    <meta charset="UTF-8">
+
+    <meta
+        name="viewport"
+        content="width=device-width, initial-scale=1.0"
+    >
+
+    <title>조성현 | My Life</title>
+
+    <!-- Google Font -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+
+    <link
+        rel="preconnect"
+        href="https://fonts.gstatic.com"
+        crossorigin
+    >
+
+    <link
+        href="https://fonts.googleapis.com/css2?family=Noto+Sans+KR:wght@400;500;600;700;800&display=swap"
+        rel="stylesheet"
+    >
+
+    <link rel="stylesheet" href="style.css">
+</head>
+
+
+<body>
+
+<div class="page">
+
+
+    <!-- =====================================
+         HEADER
+    ====================================== -->
+
+    <header class="top-header">
+
+        <div class="header-inner">
+
+            <div class="logo">
+
+                <span class="logo-camera">
+                    ◎
+                </span>
+
+                <span>
+                    MY LIFE
+                </span>
+
+            </div>
+
+
+            <div class="header-title">
+                A little piece of me
+            </div>
+
+
+            <div class="header-icons">
+
+                <button
+                    class="icon-button"
+                    id="headerLike"
+                    aria-label="좋아요"
+                >
+                    ♡
+                </button>
+
+
+                <button
+                    class="icon-button"
+                    id="menuButton"
+                    aria-label="메뉴"
+                >
+                    ☰
+                </button>
+
+            </div>
+
+        </div>
+
+    </header>
+
+
+
+    <!-- =====================================
+         MAIN
+    ====================================== -->
+
+    <main class="main-container">
+
+
+        <!-- =================================
+             PROFILE
+        ================================== -->
+
+        <section class="profile-section">
+
+            <div class="profile-top">
+
+                <!-- PROFILE IMAGE -->
+                <div class="profile-image">
+                    <img src="profile.jpg" alt="조성현 프로필 사진">
+                </div>
+
+                <!-- PROFILE NAME / ID -->
+                <div class="profile-info">
+                    <div class="profile-name-row">
+                        <h1>조성현</h1>
+                        <span class="verified">✓</span>
+                    </div>
+                    <p class="profile-id">@Sungheyon</p>
+                </div>
+
+                <!-- FOLLOW BUTTON -->
+                <button class="follow-button" id="followButton">팔로우</button>
+
+            </div>
+        </section>
+
+        <!-- =====================================
+             TABS
+        ====================================== -->
+
+        <nav class="profile-tabs">
+
+
+            <button
+                class="tab active"
+                data-filter="all"
+            >
+
+                <span>
+                    ▦
+                </span>
+
+                전체
+
+            </button>
+
+
+            <button
+                class="tab"
+                data-filter="life"
+            >
+
+                <span>
+                    ♡
+                </span>
+
+                MY LIFE
+
+            </button>
+
+
+            <button
+                class="tab"
+                data-filter="favorite"
+            >
+
+                <span>
+                    ☆
+                </span>
+
+                FAVORITE
+
+            </button>
+
+
+        </nav>
+
+
+
+        <!-- =====================================
+             POST GRID
+        ====================================== -->
+
+        <section class="post-grid">
+
+
+            <!-- ABOUT ME -->
+
+            <article
+                class="post-card life"
+                data-title="ABOUT ME"
+                data-type="정보"
+                data-content="이름은 조성현, 34살입니다. 하루하루 소중함에 감사하며 살고있습니다."
+                data-icon="👤"
+            >
+
+                <div class="post-image post-profile">
+
+                    <span class="big-icon">
+                        👤
+                    </span>
+
+                    <div class="image-overlay">
+
+                        <span>
+                            ABOUT ME
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="post-footer">
+
+                    <span>
+                        ♡
+                    </span>
+
+                    <span>
+                        ABOUT ME
+                    </span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- GAME -->
+
+            <article
+                class="post-card life"
+                data-title="GAME"
+                data-type="취미"
+                data-content="게임을 좋아합니다. League of Legends와 Eternal Return을 즐겨합니다. 게임 속에서 전략을 생각하고 승리를 위해 도전하는 순간을 좋아합니다."
+                data-icon="🎮"
+                data-popup-image="game.jpg"
+            >
+
+                <div class="post-image post-game">
+
+                    <img
+                        src="game.jpg"
+                        alt="게임"
+                        class="post-real-image"
+                    >
+
+                    <div class="image-overlay">
+
+                        <span>
+                            GAME
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="post-footer">
+
+                    <span>
+                        ♡
+                    </span>
+
+                    <span>
+                        GAME
+                    </span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- EXERCISE -->
+
+            <article
+                class="post-card life"
+                data-title="EXERCISE"
+                data-type="취미"
+                data-content="운동을 하면서 몸과 마음을 관리합니다. 바쁜 일상 속에서도 나 자신을 위해 시간을 보내는 것을 중요하게 생각합니다."
+                data-icon="🏋️"
+                data-popup-image="exercise.jpg"
+            >
+
+                <div class="post-image post-exercise">
+
+                    <img
+                        src="exercise.jpg"
+                        alt="운동"
+                        class="post-real-image"
+                    >
+
+                    <div class="image-overlay">
+
+                        <span>
+                            EXERCISE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="post-footer">
+
+                    <span>
+                        ♡
+                    </span>
+
+                    <span>
+                        EXERCISE
+                    </span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- COFFEE -->
+
+            <article
+                class="post-card favorite"
+                data-title="COFFEE"
+                data-type="좋아하는 음식"
+                data-content="좋아하는 음식 중 하나는 커피입니다. 하루를 시작하거나 잠시 쉬어가는 순간에 함께하는 한 잔의 커피를 좋아합니다. 가장 좋아하는 원두는 에티오피아 입니다."
+                data-icon="☕"
+                data-popup-image="coffee.jpg"
+            >
+
+                <div class="post-image post-coffee">
+
+                    <img
+                        src="coffee.jpg"
+                        alt="커피"
+                        class="post-real-image"
+                    >
+
+                    <div class="image-overlay">
+
+                        <span>
+                            COFFEE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="post-footer">
+
+                    <span>
+                        ♡
+                    </span>
+
+                    <span>
+                        COFFEE
+                    </span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- PIZZA -->
+
+            <article
+                class="post-card favorite"
+                data-title="PIZZA"
+                data-type="좋아하는 음식"
+                data-content="피자는 제 최애 음식이에요. 최근엔 파파존스에 빠졌습니다."
+                data-icon="🍕"
+                data-popup-image="pizza.jpg"
+            >
+
+                <div class="post-image post-pizza">
+
+                    <img
+                        src="pizza.jpg"
+                        alt="피자"
+                        class="post-real-image"
+                    >
+
+                    <div class="image-overlay">
+
+                        <span>
+                            PIZZA
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="post-footer">
+
+                    <span>
+                        ♡
+                    </span>
+
+                    <span>
+                        PIZZA
+                    </span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- CHEX -->
+
+            <article
+                class="post-card favorite"
+                data-title="CHEX CHOCOLATE"
+                data-type="좋아하는 음식"
+                data-content="운동전에 간단하게 단백질 보충겸 먹는 첵스초코.
+밥해먹기 싫은 아침으로 우유에
+첵스초코"
+                data-icon="🥣"
+                data-popup-image="chex.jpg"
+            >
+
+                <div class="post-image post-cereal">
+
+                    <img
+                        src="chex.jpg"
+                        alt="첵스초코"
+                        class="post-real-image"
+                    >
+
+                    <div class="image-overlay">
+
+                        <span>
+                            CHEX CHOCOLATE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="post-footer">
+
+                    <span>
+                        ♡
+                    </span>
+
+                    <span>
+                        CHEX CHOCO
+                    </span>
+
+                </div>
+
+            </article>
+
+
+
+            <!-- MUSIC -->
+
+            <article
+                class="post-card favorite"
+                data-title="MUSIC"
+                data-type="좋아하는 가수"
+                data-content="제가 좋아하는 가수는 Mrs. GREEN APPLE입니다. 특히 푸름과 여름이라는 곡을 정말 좋아해요."
+                data-icon="🎵"
+                data-popup-image="music.jpg"
+            >
+
+                <div class="post-image post-music">
+
+                    <img
+                        src="music.jpg"
+                        alt="Mrs. GREEN APPLE"
+                        class="post-real-image"
+                    >
+
+                    <div class="image-overlay">
+
+                        <span>
+                            MRS. GREEN APPLE
+                        </span>
+
+                    </div>
+
+                </div>
+
+
+                <div class="post-footer">
+
+                    <span>
+                        ♡
+                    </span>
+
+                    <span>
+                        MUSIC
+                    </span>
+
+                </div>
+
+            </article>
+
+
+        </section>
+
+
+
+        <!-- =====================================
+             CONTACT
+        ====================================== -->
+
+        <section class="contact-section">
+
+
+            <div class="contact-title">
+
+                <span>
+                    ✦
+                </span>
+
+                CONTACT
+
+            </div>
+
+
+            <div class="contact-list">
+
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        📍
+                    </div>
+
+                    <div>
+
+                        <span class="contact-label">
+                            LOCATION
+                        </span>
+
+                        <p>
+                            세종특별자치시 나성동<br>
+                            나릿재마을 3단지 308동 503호
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+                <div class="contact-item">
+
+                    <div class="contact-icon">
+                        📞
+                    </div>
+
+                    <div>
+
+                        <span class="contact-label">
+                            PHONE
+                        </span>
+
+                        <p>
+                            010-5843-3238
+                        </p>
+
+                    </div>
+
+                </div>
+
+
+            </div>
+
+        </section>
+
+
+    </main>
+
+
+
+    <!-- =====================================
+         FOOTER
+    ====================================== -->
+
+    <footer class="footer">
+
+        <div class="footer-logo">
+            MY LIFE
+        </div>
+
+        <p>
+            Made by 조성현
+        </p>
+
+        <p class="copyright">
+            © 2026 JO SUNGHYEUN. ALL RIGHTS RESERVED.
+        </p>
+
+    </footer>
+
+
+</div>
+
+
+
+<!-- =========================================
+     POST MODAL
+========================================== -->
+
+<div
+    class="modal"
+    id="postModal"
+>
+
+    <div class="modal-background"></div>
+
+
+    <div class="modal-content">
+
+
+        <button
+            class="modal-close"
+            id="modalClose"
+            aria-label="닫기"
+        >
+            ×
+        </button>
+
+
+        <div
+            class="modal-image"
+            id="modalImage"
+        >
+
+            <span id="modalIcon">
+                👤
+            </span>
+
+        </div>
+
+
+        <div class="modal-info">
+
+
+            <div class="modal-header">
+
+
+                <div class="modal-avatar">
+
+                    <img
+                        src="profile.jpg"
+                        alt="조성현"
+                    >
+
+                </div>
+
+
+                <div>
+
+                    <strong>
+                        조성현
+                    </strong>
+
+                    <span id="modalType">
+                        MY LIFE
+                    </span>
+
+                </div>
+
+
+            </div>
+
+
+            <div class="modal-body">
+
+                <h2 id="modalTitle">
+                    ABOUT ME
+                </h2>
+
+                <p id="modalText">
+                    나를 소개합니다.
+                </p>
+
+            </div>
+
+
+
+            <!-- COMMENTS -->
+
+            <div class="modal-comments">
+
+
+                <div class="comments-title">
+
+                    <strong>
+                        댓글
+                    </strong>
+
+                    <span id="commentCount">
+                        0
+                    </span>
+
+                </div>
+
+
+                <div
+                    class="comment-list"
+                    id="commentList"
+                >
+                </div>
+
+
+                <div class="comment-input-box">
+
+                    <input
+                        type="text"
+                        id="commentInput"
+                        class="comment-input"
+                        placeholder="댓글을 입력하세요..."
+                        maxlength="200"
+                    >
+
+                    <button
+                        type="button"
+                        id="commentBtn"
+                        class="comment-btn"
+                    >
+                        게시
+                    </button>
+
+                </div>
+
+
+            </div>
+
+
+
+            <div class="modal-actions">
+
+                <button
+                    id="modalLike"
+                    class="modal-like"
+                >
+                    ♡
+                </button>
+
+                <span>
+                    나를 기록하는 공간
+                </span>
+
+            </div>
+
+
+        </div>
+
+    </div>
+
+</div>
+
+
+
+<script src="script.js"></script>
+
+</body>
+</html>
